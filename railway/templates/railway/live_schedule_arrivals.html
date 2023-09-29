@@ -1,0 +1,64 @@
+{% extends "railway/base.html" %}
+{% block body %}
+    <div class="form-group py-3 col-12">
+        <label class="form-label mt-4"> Search for a Station</label>
+        <form action="." method="GET">
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter Station name" name="station_name">
+            <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </form>
+        <a href="{% url 'live_schedules' %}" class="alert-link" >See Departures.</a>
+        <hr>
+      {% if live_schedules_arrivals %}
+    <div class="card bg-light mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Live schedule
+      </div>
+
+         <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Arrival Station</th>
+                          <th scope="col">Departing Station</th>
+                          <th scope="col">Train</th>
+                          <th scope="col">Arrival time</th>
+                          <th scope="col">Delay</th>
+                          <th scope="col">Delay last updated at:</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for live_schedules_arrival in live_schedules_arrivals %}
+                        <tr>
+                            <td>{{ live_schedules_arrival.to_station.name }}</td>
+                            <td>{{ live_schedules_arrival.from_station.name }}</td>
+                            <td>{{ live_schedules_arrival.train.name }}</td>
+                            <td>{{ live_schedules_arrival.arrival_time }}</td>
+                            <td>
+                                {% if  live_schedule.delay %}
+                                  {{  live_schedule.delay }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if live_schedule.delay %}
+                                    {{  live_schedule.delay.updated_at }}
+                                {% else %}
+                                    {%now "DATETIME_FORMAT" %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+         </table>
+    {% else %}
+         <h5 class="alert alert-primary me-4">No schedule records.</h5>
+    {% endif %}
+
+    </div>
+      <div class="alert alert-success py-3 col-12" role="alert">
+            <a href="{% url 'index'%}" class="alert-link" >Go back to Home Page.</a>
+        </div>
+  </div>
+{% endblock %}

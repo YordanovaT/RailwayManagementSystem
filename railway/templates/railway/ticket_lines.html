@@ -1,0 +1,51 @@
+{% extends "railway/base.html" %}
+{% block body %}
+<div class="row py-5">
+  <div class="col-12">
+    {% if ticket_lines %}
+    <div class="card bg-light mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> All lines departing  from this station
+      </div>
+
+         <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Departing Station</th>
+                          <th scope="col">Arrival Station</th>
+                          <th scope="col">Train</th>
+                          <th scope="col">Distance</th>
+                          <th scope="col">Delay</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for ticket_line in ticket_lines %}
+                          <tr>
+                            <td>{{ ticket_line.from_station.name }}</td>
+                            <td>{{ ticket_line.to_station.name }}</td>
+                            <td>{{ ticket_line.train.name }}</td>
+                            <td>{{ ticket_line.distance}}</td>
+
+                            <td>
+                              {% if ticket_line.delay %}
+                                  {{  ticket_line.delay }}
+                              {% else %}
+                               N/A
+                              {% endif %}
+                            </td>
+
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+         </table>
+    {% else %}
+    <h5 class="alert alert-primary ms-4 me-4">No line departing from this Station</h5>
+    {% endif %}
+    </div>
+          <div class="alert alert-success py-5" role="alert">
+            <a href="{% url 'index'%}" class="alert-link" >Go back to Home Page.</a>
+        </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "railway/base.html" %}
+{% block body %}
+
+   {% if max_quantity %}
+         <div class="alert alert-dismissible alert-danger" style="100%;">
+                <p class="text-center"><strong>Warning!</strong></p> <br>
+                <p class="text-center"><strong>The max ticket quantity for the ticket line has been reached.
+                    Sorry for the inconvenience. </strong></p>
+         </div>
+   {% endif %}
+   {% if ticket_errors %}
+        <div>
+          <p class="text-center"><strong>Warning!</strong></p> <br>
+                <p class="text-center"><strong>You need to choose a date in order to continue with the
+                reservation.</strong></p>
+        </div>
+   {% endif %}
+   {% if success %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="card border-primary mb-3" style="100%;" align="center">
+          <div class="card-header text-center"><strong>The ticket was booked successfully.</strong></div>
+          <div class="card-body"  align="center">
+            <p class="card-text"><strong>Your Ticket Number is:</strong> {{ticket_number}}</p>
+            <p class="card-text"><strong>Your Seat Number is:</strong> {{seat_number}}</p>
+            <p class="card-text"><strong>{{ticket}}</strong></p>
+            <p class="card-text"><strong>Ticket Price:</strong> {{ticket.price}} leva </p>
+
+
+            <div class="alert alert-dismissible alert-warning">
+
+                <p class="text-center"><strong>Warning!</strong></p> <br>
+                <p class="text-center"><strong>Show your ticket number to the station cashier</strong> so you can pay.
+                    You cannot validate the ticket you just booked any other way.<strong> If your ticket is not validated
+                    by the cashier, and you haven't paid for it by the train's leaving, your reservation will be cancelled.</strong>
+                    Thank you for your understanding.</p>
+            </div>
+
+
+            <p class="text-center"><a href="{% url 'index'%}" class="alert-link text-center">Go back to Home Page.</a></p>
+          </div>
+    {% else %}
+    <h3 class="text-center m-4">Book a Ticket</h3>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="card border-light mb-3">
+                    <div class="card-header">
+                        <i class="fa-sharp fa-solid fa-receipt fa-lg"></i> Ticket Booking
+                    </div>
+
+                    <div class="card-body">
+
+                        <form  action="{% url 'book_ticket' %}" method="GET">
+                            <label class="form-label mt-4"> <b> Enter departure date </b> </label>
+
+                                    <div class="input-group mb-1">
+                                            <input type="date" id="start" name="departure_time">
+                                    </div>
+
+                             <label class="form-label mt-4"> <b> Enter departing station </b> </label>
+                                    <div class="input-group mb-1 ">
+                                    <input type="text" class="form-control" placeholder="Enter departing station"
+                                           name="departing_station_name">
+                                    </div>
+                            <label class="form-label mt-4"> <b> Enter arrival station </b> </label>
+
+                                    <div class="input-group mb-1">
+                                    <input type="text" class="form-control " placeholder="Enter arrival station"
+                                           name="arrival_station_name">
+                                    </div>
+                              <input type="submit" value="Search" name="search_form" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="{% url 'book_ticket' %}" method="POST">
+                           {% csrf_token %}
+                            {{form.as_p}}
+
+                            <button type="submit" class="btn btn-primary" >Book Ticket</button>
+                            <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+{% endblock %}

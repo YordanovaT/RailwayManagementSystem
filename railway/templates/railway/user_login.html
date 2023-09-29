@@ -1,0 +1,60 @@
+{% extends "railway/base.html" %}
+{% block body %}
+<br>
+
+{% if success is False %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>There is no user with the provided credentials or you have provided wrong credentials. </strong>
+            Please log in again or click the button to register.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <hr>
+            <a class="btn btn-primary me-1" href="{% url 'user_registration' %}">
+                        Click here to register.
+            </a>
+            <a class="btn btn-primary me-1" href="{% url 'user_login' %}">
+                        Click here to return to login.
+            </a>
+        </div>
+{% elif user is None%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+            <strong>There is no existing user with the provided credentials. </strong>
+            Please click the button bellow to register in order to be able to use all functionality that is provided by
+            the site.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <hr>
+            <a class="btn btn-primary me-1" href="{% url 'user_registration' %}">
+                        Click here to register.
+            </a>
+        </div>
+
+{% else %}
+        <div class="row justify-content-center">
+                    <div class="col-6">
+                        <div class="card border-light mb-3">
+                            <div class="card-header">
+                                <i class="fa-solid fa-person-to-portal fa-lg"></i> User Log in
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'user_login' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class=mb-3>
+                                        <label for="username" class="form-label mt-4">User name</label>
+                                        <input type="text" id="username" class="form-control" placeholder="Enter User name" name="username">
+                                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="form-label mt-4">Password</label>
+                                        <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                                    </div>
+                                  <br>
+                                    <input type="submit" value="Submit" class="btn btn-primary">
+                                    <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+{% endif %}
+{% endblock %}

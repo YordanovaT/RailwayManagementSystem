@@ -1,0 +1,103 @@
+{% extends "railway/base.html" %}
+
+{% block body %}
+<h3 class="m-4">All Stations</h3>
+<div class="row">
+  <div class="col-12">
+    {% if stations %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Station Records
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Station Name</th>
+                  {% if request.user.is_staff %}
+                  <th scope="col">Actions</th>
+                  {% endif %}
+                  <th scope="col">Lines</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for station in stations %}
+                  <tr>
+                    <td>{{ station.name }}</td>
+                    {% if request.user.is_staff %}
+                    <td>
+                      <a class="btn btn-warning me-1" href="{% url 'edit_station' station.pk %}">
+                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                      </a>
+                      {% endif %}
+                    </td>
+                    <!--Button to see Routes -->
+                    <td>
+                       <a class="btn btn-warning me-1" href="{% url 'ticket_lines' station.pk %}">
+                        See Lines Departing from This Station
+                      </a>
+                    </td>
+
+                  </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </p>
+      </div>
+    </div>
+     {% else %}
+    <h5 class="alert alert-primary ms-4 me-4">No Station Records</h5>
+    {% endif %}
+  </div>
+</div>
+
+<h3 class="m-4">All Trains</h3>
+<div class="row">
+  <div class="col-12">
+    {% if trains %}
+    <div class="card bg-light ms-4 me-4 mb-4">
+      <div class="card-header">
+        <i class="fa-solid fa-list fa-lg"></i> Trains Records
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Train Type</th>
+                  {% if request.user.is_staff %}
+                  <th scope="col">Actions</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for train in trains %}
+                  <tr>
+                    <td>{{ train.name }}</td>
+                    <td>{{ train.train_type }}</td>
+                    {% if request.user.is_staff %}
+                    <td>
+                      <a class="btn btn-warning me-1" href="{% url 'edit_train' train.pk %}">
+                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                      </a>
+                      {% endif %}
+                    </td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+      </p>
+    </div>
+  </div>
+     {% else %}
+    <h5 class="alert alert-primary ms-4 me-4">No Train Records</h5>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
