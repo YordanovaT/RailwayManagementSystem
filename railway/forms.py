@@ -21,39 +21,13 @@ class StationForm(forms.ModelForm):
 
 class TrainForm(forms.ModelForm):
     """ Django form which will be used to add and edit trains. """
-
     class Meta:
         model = Train
-        fields = ['name']
+        fields = ['name', 'train_type']
         labels = {
             'name': 'Train Name',
+            'train_type': 'Train Type',
         }
-
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-
-class UserRegisterForm(UserCreationForm):
-    """ Django form which will be used for user login and registration. """
-
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=30)
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=30)
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-
-    def __init__(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['first_name'].widget.attrs['class'] = 'form-control'
-        self.fields['last_name'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
 
 
 class MyModelChoiceField(forms.ModelChoiceField):

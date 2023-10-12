@@ -77,11 +77,18 @@
 
                     <div class="card-body">
                         <form action="{% url 'book_ticket' %}" method="POST">
-                           {% csrf_token %}
                             {{form.as_p}}
-
+                            {% if user.is_authenticated%}
                             <button type="submit" class="btn btn-primary" >Book Ticket</button>
                             <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                            {% else %}
+                                <div class="alert alert-dismissible alert-warning" align="center">
+                                    You need to log in to be able to proceed with the ticket booking.
+                                    <a href="{% url 'login_view' %}" style="text-warning">
+                                        <strong>Click here to go to the Log in page</strong>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </form>
                     </div>
 

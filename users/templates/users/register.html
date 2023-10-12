@@ -1,0 +1,24 @@
+{% extends "railway/base.html" %}
+{% block body %}
+
+
+<div class="card border-light" style="100%">
+    <div class="card-header" style="100%" align="center">
+        <i class="fa-solid fa-id-card fa-lg"></i> User Registration
+    </div>
+    <div class="card-body">
+        <form action="{% url 'user_registration' %}" method="POST">
+            {% csrf_token %}
+            {{register_form.as_p}}
+            {% for field in register_form%}
+                {% for error in field.errors%}
+                    <p class="text-danger">{{error}}</p>
+                {% endfor %}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
