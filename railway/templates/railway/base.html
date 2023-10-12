@@ -47,7 +47,7 @@
           </li>
         {% else %}
           <li class="nav-item" align="right">
-            <a class="nav-link" href="{% url 'user_login' %}">
+            <a class="nav-link" href="{% url 'login_view' %}">
               <i class="fa-solid fa-right-to-bracket fa-lg"></i> Log in
             </a>
           </li>
@@ -58,6 +58,9 @@
           </li>
         {% endif %}
       </ul>
+        {% if request.user.is_authenticated %}
+            <h4 style="color:white">Welcome back, {{request.user.first_name}}</h4>
+        {% endif %}
     </div>
   </div>
 </nav>
