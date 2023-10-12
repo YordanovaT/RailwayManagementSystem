@@ -12,9 +12,9 @@ class Train(models.Model):
     """ Model for the train."""
 
     class TrainType(models.TextChoices):
-        FASTTRAIN = 'BV', _('Fast Train')
-        SLOWTRAIN = 'PV', _('Slow Train')
-        VERYFASTTRAIN = 'UBV', _('Very Fast Train')
+        FASTTRAIN = 'FT', _('Fast Train')
+        SLOWTRAIN = 'ST', _('Slow Train')
+        VERYFASTTRAIN = 'VFT', _('Very Fast Train')
 
     name = models.CharField(max_length=10, unique=True)
     train_type = models.CharField(
