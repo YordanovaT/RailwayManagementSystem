@@ -1,6 +1,15 @@
 {% extends "railway/base.html" %}
 
 {% block body %}
+    <script>
+        function myFunction(event) {
+          if (!confirm("Are you sure you want to edit the chosen train?")) {
+            res=event.preventDefault()
+          }
+          document.getElementById("").innerHTML = res;
+        }
+    </script>
+
     <h3 class="text-center m-4">Edit Train</h3>
     {% if success %}
         <div class="alert alert-success" role="alert">
@@ -18,7 +27,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             {{form.as_p}}
-                            <button type="submit" class="btn btn-primary">Submit Update</button>
+                            <button type="submit" onclick="myFunction(event)" class="btn btn-primary">Submit Update</button>
                             <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
                         </form>
                     </div>

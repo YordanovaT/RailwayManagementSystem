@@ -1,9 +1,18 @@
 {% extends "railway/base.html" %}
 
 {% block body %}
+    <script>
+        function myFunction(event) {
+          if (!confirm("Are you sure you want to add this station?")) {
+            res=event.preventDefault()
+          }
+          document.getElementById("").innerHTML = res;
+        }
+    </script>
+
     <h3 class="text-center m-4">Add Station</h3>
     {% if success %}
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" align="center">
             The Station is added successfully.
             <a href="{% url 'index'%}" class="alert-link">Go back to Home Page.</a>
         </div>
@@ -18,7 +27,7 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             {{form.as_p}}
-                            <button type="submit" class="btn btn-primary">Add Station</button>
+                            <button type="submit" onclick="myFunction(event)" class="btn btn-primary">Add Station</button>
                             <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
                         </form>
                     </div>

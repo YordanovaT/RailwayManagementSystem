@@ -1,6 +1,13 @@
 {% extends "railway/base.html" %}
 {% block body %}
-
+    <script>
+        function myFunction(event) {
+          if (!confirm("Are you sure you want to book the chosen ticket?")) {
+            res=event.preventDefault()
+          }
+          document.getElementById("").innerHTML = res;
+        }
+    </script>
    {% if max_quantity %}
          <div class="alert alert-dismissible alert-danger" style="100%;">
                 <p class="text-center"><strong>Warning!</strong></p> <br>
@@ -77,9 +84,10 @@
 
                     <div class="card-body">
                         <form action="{% url 'book_ticket' %}" method="POST">
+                            {% csrf_token %}
                             {{form.as_p}}
                             {% if user.is_authenticated%}
-                            <button type="submit" class="btn btn-primary" >Book Ticket</button>
+                            <button type="submit" onclick="myFunction(event)" class="btn btn-primary" >Book Ticket</button>
                             <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
                             {% else %}
                                 <div class="alert alert-dismissible alert-warning" align="center">
