@@ -142,7 +142,9 @@ def add_station(request):
             new_station.save()
             context['form'] = station_form
             context['success'] = True
-        return render(request, 'railway/add_station.html', context)
+            return redirect('index')
+        else:  # not valid form
+            context['form'] = station_form
     else:
         station_form = StationForm()
         context['form'] = station_form
@@ -203,7 +205,9 @@ def add_train(request):
             new_station.save()
             context['form'] = train_form
             context['success'] = True
-        return render(request, 'railway/add_train.html', context)
+            return redirect('index')
+        else:  # not valid form
+            context['form'] = train_form
     else:
         train_form = TrainForm()
         context['form'] = train_form
