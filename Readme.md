@@ -14,8 +14,8 @@ The system is build using **Django 4**, **Python 3.10**, **Bootstrap 5** with **
 
 ## Table of contents
 *  [Installation](#Installation)  
-* [Running the application](#Runningtheapplication)  
-* [View the application](#Viewtheapplication)
+* [Running the application](#Running-the-application)  
+* [View the application](#View-the-application)
 
 ### [Installation](#Installation) 
 
@@ -53,12 +53,12 @@ The system is build using **Django 4**, **Python 3.10**, **Bootstrap 5** with **
 
 *When prompted, enter an email, first and last name, mobile and password.*  
 
-### [Running the application](#Runningtheapplication)  
+### [Running the application](#Running-the-application)  
 
 *From the **root** directory run:*  
 
     python manage.py runserver
 
-### [View the application](#Viewtheapplication)  
+### [View the application](#View-the-application)  
 
 *Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)*
