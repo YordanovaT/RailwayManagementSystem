@@ -61,4 +61,6 @@ The system is build using **Django 4**, **Python 3.10**, **Bootstrap 5** with **
 
 ### [View the application](#View-the-application)  
 
-*Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)*
+*Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)*  
+  
+[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
