@@ -1,11 +1,10 @@
 """ Views for Railway system."""
-from django.http import Http404, HttpResponseRedirect
-from django.urls import reverse
+
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from .models import Station, Train, Route, Ticket
 from .forms import StationForm, TrainForm, BookTicketForm
-from django.utils import timezone
-import random
+
 
 
 # Create your views here.
@@ -19,8 +18,8 @@ def index(request):
     """
 
     return render(request, 'railway/index.html', {
-        'stations': Station.objects.all(),
-        'trains': Train.objects.all(),
+        'stations': Station.objects.all(),  # pylint: disable=no-member
+        'trains': Train.objects.all(),  # pylint: disable=no-member
     })
 
 
@@ -32,7 +31,7 @@ def ticket_lines(request, start_station_id):
         Returns:
     """
 
-    stations_query = Route.objects.filter(from_station=start_station_id)
+    stations_query = Route.objects.filter(from_station=start_station_id)  # pylint: disable=no-member
 
     return render(request, 'railway/ticket_lines.html', {
         'ticket_lines': stations_query,
@@ -47,6 +46,7 @@ def live_schedule_departing(request):
     """
     departing_time = timezone.now()
     search_query = request.GET.get('station_name')
+    # pylint: disable=no-member
     ticket_lines_query = Route.objects.filter(from_station_id__name=search_query,
                                               departure_time__gte=departing_time)
 
@@ -63,6 +63,7 @@ def live_schedule_arrivals(request):
     """
     arrival_time = timezone.now()
     search_query = request.GET.get('station_name')
+    # pylint: disable=no-member
     ticket_lines_query = Route.objects.filter(to_station_id__name=search_query,
                                               arrival_time__gte=arrival_time, )
 
@@ -71,13 +72,15 @@ def live_schedule_arrivals(request):
     })
 
 
-def book_ticket(request):
-    """ Book a ticket view. It checks if the user is authenticated. If not - the user is redirected to the login page.
+def book_ticket(request):  # pylint: disable=inconsistent-return-statements
+    """
+        Book a ticket view. It checks if the user is authenticated.
+        If not - the user is redirected to the login page.
         Else the user can book a ticket.
-               Args:
-                   request: Http request
-               Returns:
-        """
+            Args:
+                request: Http request
+            Returns:
+    """
 
     context = {}
 
@@ -143,8 +146,8 @@ def add_station(request):
             context['form'] = station_form
             context['success'] = True
             return redirect('index')
-        else:  # not valid form
-            context['form'] = station_form
+        # not valid form
+        context['form'] = station_form
     else:
         station_form = StationForm()
         context['form'] = station_form
@@ -160,31 +163,31 @@ def edit_station(request, station_id):
     """
     context = {}
     if request.method == 'POST':
-        station = Station.objects.get(pk=station_id)
+        station = Station.objects.get(pk=station_id)  # pylint: disable=no-member
         station_edit_form = StationForm(request.POST, instance=station)
         if station_edit_form.is_valid():
             station_edit_form.save()
             context['form'] = station_edit_form
             return redirect('index')
-        else:  # not valid form
-            context['form'] = station_edit_form
+        # not valid form
+        context['form'] = station_edit_form
     else:  # GET request
-        station = Station.objects.get(pk=station_id)
+        station = Station.objects.get(pk=station_id)  # pylint: disable=no-member
         station_edit_form = StationForm(instance=station)
         context['form'] = station_edit_form
     return render(request, 'railway/edit_station.html', context)
 
 
-def delete_station(request, pk):
+def delete_station(request, id):  # pylint: disable=invalid-name, redefined-builtin
     """ Delete station
             Args:
                 request: Http request
-                station_id: Station id
+                id: Station id
             Returns:
         """
 
     if request.method == 'POST':
-        station = Station.objects.get(pk=pk)
+        station = Station.objects.get(pk=id)  # pylint: disable=no-member
         station.delete()
     return redirect('index')
 
@@ -206,8 +209,8 @@ def add_train(request):
             context['form'] = train_form
             context['success'] = True
             return redirect('index')
-        else:  # not valid form
-            context['form'] = train_form
+        # not valid form
+        context['form'] = train_form
     else:
         train_form = TrainForm()
         context['form'] = train_form
@@ -223,22 +226,22 @@ def edit_train(request, train_id):
     """
     context = {}
     if request.method == 'POST':
-        train = Train.objects.get(pk=train_id)
+        train = Train.objects.get(pk=train_id)  # pylint: disable=no-member
         train_edit_form = TrainForm(request.POST, instance=train)
         if train_edit_form.is_valid():
             train_edit_form.save()
             context['form'] = train_edit_form
             return redirect('index')
-        else:  # not valid form
-            context['form'] = train_edit_form
+        # not valid form
+        context['form'] = train_edit_form
     else:  # GET request
-        train = Train.objects.get(pk=train_id)
+        train = Train.objects.get(pk=train_id)  # pylint: disable=no-member
         train_edit_form = TrainForm(instance=train)
         context['form'] = train_edit_form
     return render(request, 'railway/edit_train.html', context)
 
 
-def delete_train(request, id):
+def delete_train(request, id):  # pylint: disable=invalid-name, redefined-builtin
     """ Delete train
             Args:
                 request: Http request
@@ -247,6 +250,6 @@ def delete_train(request, id):
         """
 
     if request.method == 'POST':
-        train = Train.objects.get(pk=id)
+        train = Train.objects.get(pk=id)  # pylint: disable=no-member
         train.delete()
     return redirect('index')

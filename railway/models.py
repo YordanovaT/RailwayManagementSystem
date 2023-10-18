@@ -1,9 +1,8 @@
 """ Models for Railway system."""
 
+import random
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import random
-from django.utils import timezone
 
 
 # Create your models here.
@@ -12,6 +11,8 @@ class Train(models.Model):
     """ Model for the train."""
 
     class TrainType(models.TextChoices):
+        """Model for train's type"""
+
         FASTTRAIN = 'FT', _('Fast Train')
         SLOWTRAIN = 'ST', _('Slow Train')
         VERYFASTTRAIN = 'VFT', _('Very Fast Train')
@@ -61,13 +62,16 @@ class Route(models.Model):
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
     train = models.ForeignKey(Train, on_delete=models.PROTECT)
-    from_station = models.ForeignKey(Station, on_delete=models.PROTECT, related_name='from_station')  # start station
-    to_station = models.ForeignKey(Station, on_delete=models.PROTECT, related_name='to_station')  # final station
+    from_station = models.ForeignKey(Station, on_delete=models.PROTECT,
+                                     related_name='from_station')  # start station
+    to_station = models.ForeignKey(Station, on_delete=models.PROTECT,
+                                   related_name='to_station')  # final station
     distance = models.ForeignKey(Distance, on_delete=models.PROTECT)
     delay = models.ForeignKey(Delay, on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
-        return f'Route:  from {self.from_station}, to {self.to_station}, {self.departure_time}, {self.arrival_time}'
+        return f'Route:  from {self.from_station}, to {self.to_station},' \
+               f' {self.departure_time}, {self.arrival_time}'
 
 
 class TicketLine(models.Model):
@@ -79,8 +83,9 @@ class TicketLine(models.Model):
 
     def __str__(self):
         stations = []
-        for route in self.route.all().order_by('departure_time'):
-            stations.append(f' from: {route.from_station} - to: {route.to_station}, Departing: {route.departure_time}')
+        for route in self.route.all().order_by('departure_time'):  # pylint: disable=no-member
+            stations.append(f' from: {route.from_station} - to: '
+                            f'{route.to_station}, Departing: {route.departure_time}')
 
         return f'{"; ".join(stations)}'
 
@@ -93,4 +98,5 @@ class Ticket(models.Model):
     ticket_number = models.PositiveIntegerField(blank=True, default=random.randrange(10000))
 
     def __str__(self):
-        return f'Ticket Number:{self.ticket_number} , Seat Number:{self.seat_number} , {self.ticket_line}'
+        return f'Ticket Number:{self.ticket_number} ,' \
+               f' Seat Number:{self.seat_number} , {self.ticket_line}'

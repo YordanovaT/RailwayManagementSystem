@@ -1,5 +1,7 @@
+"""Django admin module"""
+
 from django.contrib import admin
-from .models import *
+from .models import Train, Station, Route, Ticket, TicketLine, Distance, Delay
 
 # Register your models here.
 admin.site.register(Train)
@@ -12,5 +14,6 @@ admin.site.register(Distance)
 
 @admin.register(Delay)
 class DelayAdmin(admin.ModelAdmin):
-    readonly_fields = ['created_at', 'updated_at']
+    """Class customizing delay for admin"""
 
+    readonly_fields = ['created_at', 'updated_at']
