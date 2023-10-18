@@ -1,3 +1,5 @@
+""" Views for Users application."""
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import UserRegistrationForm, UserLogInForm
@@ -26,8 +28,8 @@ def user_registration(request):
             context['success'] = True
 
             return redirect('index')
-        else:
-            context['register_form'] = register_form
+
+        context['register_form'] = register_form
     else:
         register_form = UserRegistrationForm()
         context['register_form'] = register_form
